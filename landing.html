@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Clash of Clans - Confirmation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <style>
+        /* --- SAME THEME SETTINGS --- */
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Luckiest Guy', cursive;
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        /* Same Background as Index Page */
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://wallpapers.com/images/hd/clash-of-clans-winter-village-957-x-538-wallpaper-h7r3k6s4j8r3k6s4.jpg') no-repeat center center/cover;
+            filter: blur(5px) brightness(0.6);
+            transform: scale(1.1);
+            z-index: -2;
+        }
+
+        /* Snowfall */
+        .snow {
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: radial-gradient(4px 4px at 100px 50px, #fff , transparent), 
+                              radial-gradient(6px 6px at 200px 150px, #fff, transparent);
+            background-size: 650px 650px;
+            animation: snow 5s linear infinite;
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        @keyframes snow { to { background-position: 0 650px; } }
+
+        /* --- CARD DESIGN --- */
+        .main-card {
+            width: 90%;
+            max-width: 380px;
+            background: linear-gradient(180deg, #b31217 0%, #7a0a0e 100%);
+            border: 4px solid #f2c648;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), inset 0 0 30px rgba(0,0,0,0.4);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* Santa Fur Top */
+        .santa-fur {
+            height: 35px;
+            background: #fff;
+            width: 100%;
+            position: absolute;
+            top: 0; left: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #ddd;
+            z-index: 1;
+        }
+
+        .content-padding { 
+            padding: 60px 20px 30px 20px; 
+            position: relative; 
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+            color: #fff;
+            -webkit-text-stroke: 1.5px #000;
+            text-shadow: 3px 3px 0 #000;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: 14px;
+            font-family: sans-serif;
+            color: #ffcccc;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 0 #000;
+            line-height: 1.4;
+        }
+
+        /* Button */
+        .coc-btn {
+            background: linear-gradient(180deg, #75c92c 0%, #4ea805 100%);
+            border: 2px solid #b8ff85;
+            border-bottom: 5px solid #367503;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 24px;
+            padding: 15px 0;
+            width: 100%;
+            cursor: pointer;
+            text-shadow: 2px 2px 0 #000;
+            -webkit-text-stroke: 1px #000;
+            transition: transform 0.1s;
+        }
+        .coc-btn:active { transform: translateY(4px); border-bottom: 2px solid #367503; }
+
+        /* --- VIDEO POPUP OVERLAY --- */
+        .video-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: none; /* Hidden Initially */
+            justify-content: center;
+            align-items: center;
+            animation: zoomIn 0.5s ease-out forwards;
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ya 'cover' kar sakte ho agar full stretch chahiye */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <div class="snow"></div>
+
+    <!-- MAIN CONFIRMATION CARD -->
+    <div class="main-card" id="cardBox">
+        <div class="santa-fur"></div>
+        <div class="content-padding">
+            <h1>ALMOST THERE!</h1>
+            <p>
+                Your Dragon Scenery is ready to be injected.<br>
+                Please tap the button below to complete the final verification step.
+            </p>
+            <button class="coc-btn" onclick="triggerPrank()">CONFIRM REWARD</button>
+        </div>
+    </div>
+
+    <!-- HIDDEN VIDEO CONTAINER -->
+    <div class="video-overlay" id="vidContainer">
+        <!-- 
+           IMPORTANT: Replace 'src' below with your prank video link.
+           Agar local file hai toh 'rickroll.mp4' likho folder me daalke.
+           Ya direct URL use karo. 
+        -->
+        <video id="prankVideo" loop playsinline>
+            <source src="https://ia801602.us.archive.org/11/items/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        function triggerPrank() {
+            // 1. Card ko chhupao
+            var card = document.getElementById('cardBox');
+            card.style.display = 'none';
+
+            // 2. Video Container ko dikhao
+            var container = document.getElementById('vidContainer');
+            container.style.display = 'flex';
+
+            // 3. Video play karo (Audio ke saath)
+            var vid = document.getElementById('prankVideo');
+            
+            // Unmute just in case
+            vid.muted = false;
+            vid.volume = 1.0;
+            
+            // Play
+            vid.play().catch(error => {
+                console.log("Autoplay prevented: " + error);
+            });
+        }
+    </script>
+</body>
+</html>
